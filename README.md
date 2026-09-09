@@ -4,18 +4,18 @@ A bilingual (English / Arabic) AI assistant for UAE Ministry of Energy & Infrast
 
 ## Requirements
 
-- Python 3.10+
+- Python 3.10+ and [uv](https://docs.astral.sh/uv/)
 - An [OpenRouter](https://openrouter.ai) API key
 
 ## How to run
 
 ```bash
-pip install -r requirements.txt
+uv sync
 
 cp .env.example .env
 # Edit .env and add your OpenRouter API key
 
-streamlit run app.py
+uv run streamlit run app.py
 ```
 
 The app opens at `http://localhost:8501`.
