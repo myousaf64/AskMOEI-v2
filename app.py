@@ -1,6 +1,7 @@
 import streamlit as st
 import re
 import uuid
+from html import escape
 import pandas as pd
 from dotenv import load_dotenv
 from knowledge_base_loader import load_knowledge_base, search_knowledge_base
@@ -288,7 +289,7 @@ if st.session_state.active_tab == "admin":
 
 # ── Chat tab ───────────────────────────────────────────────────────────────────
 def _render(role: str, content: str, meta: dict | None = None):
-    escaped = content.replace("<", "&lt;").replace(">", "&gt;")
+    escaped = escape(content)
     if role == "user":
         badge = '<span class="lang-badge">AR</span>' if _is_arabic(content) else '<span class="lang-badge">EN</span>'
         st.markdown(f'<div class="user-bubble">{escaped}{badge}</div>', unsafe_allow_html=True)
@@ -303,12 +304,13 @@ def _render(role: str, content: str, meta: dict | None = None):
         st.markdown(
             f'<div class="service-card">'
             f'<div><div class="sc-label">Apply Now</div>'
-            f'<a href="{meta["service_link"]}" target="_blank" rel="noopener">{meta["service_name"]}</a>'
+            f'<a href="{escape(meta["service_link"], quote=True)}" target="_blank" rel="noopener">'
+            f'{escape(meta["service_name"])}</a>'
             f'</div></div>',
             unsafe_allow_html=True,
         )
     if meta.get("nudges"):
-        pills = "".join(f'<span class="nudge-pill">{n}</span>' for n in meta["nudges"])
+        pills = "".join(f'<span class="nudge-pill">{escape(str(n))}</span>' for n in meta["nudges"])
         st.markdown(f"<div style='margin-top:.4rem'>{pills}</div>", unsafe_allow_html=True)
     if meta.get("is_fallback"):
         st.markdown(
