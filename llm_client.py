@@ -95,6 +95,7 @@ def ask_moei(
 ) -> dict:
     """Call the LLM and return a normalised result dict. Never raises."""
     is_arabic = bool(re.search(r"[؀-ۿ]", query))
+    raw = ""
 
     try:
         client = _client(custom_key=custom_api_key)
@@ -112,7 +113,12 @@ def ask_moei(
         data = json.loads(raw)
 
     except json.JSONDecodeError:
-        data = {"answer": raw, "intent": "general", "is_fallback": True}
+        # The model returned prose instead of JSON. Show the prose, flag the fallback.
+        data = {
+            "answer": raw or "I'm sorry, I couldn't generate a response.",
+            "intent": "general",
+            "is_fallback": True,
+        }
     except Exception as exc:
         msg = (
             "عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى أو زيارة موقع موي."
