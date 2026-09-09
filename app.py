@@ -176,9 +176,9 @@ with st.sidebar:
         past = load_history(sid_input, limit=20)
         if past:
             st.session_state.messages = past
-            pd = get_session_profile(sid_input)
-            if pd:
-                st.session_state.user_profile = pd["user_profile"]
+            prof = get_session_profile(sid_input)
+            if prof:
+                st.session_state.user_profile = prof["user_profile"]
             st.rerun()
 
     st.markdown('<hr class="sb-hr">', unsafe_allow_html=True)
