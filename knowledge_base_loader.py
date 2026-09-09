@@ -122,8 +122,8 @@ def _bm25_score(
     return score
 
 
-# Cache of the corpus-level BM25 stats, keyed by corpus identity + size so it
-# rebuilds only when the knowledge base actually changes.
+# Cache of the corpus-level BM25 stats, keyed by chunk count and the first and last
+# chunk id, so it rebuilds only when the knowledge base actually changes.
 _INDEX_CACHE: dict = {}
 
 
@@ -134,7 +134,9 @@ def _get_index(docs: list[dict]) -> dict:
     computing them once and reusing them turns every search from O(corpus) work
     into a cheap scoring pass.
     """
-    cache_key = (id(docs), len(docs))
+    # Key on corpus content, not on id(docs). CPython reuses freed addresses, so an
+    # address-based key can serve a stale index for a different corpus.
+    cache_key = (len(docs), docs[0]["chunk_id"], docs[-1]["chunk_id"])
     cached = _INDEX_CACHE.get("entry")
     if cached and cached["key"] == cache_key:
         return cached
