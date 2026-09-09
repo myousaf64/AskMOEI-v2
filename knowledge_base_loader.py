@@ -52,19 +52,6 @@ def _extract_pdf(filepath: Path) -> str:
         import pdfplumber
         with pdfplumber.open(filepath) as pdf:
             return "\n".join(page.extract_text() or "" for page in pdf.pages)
-    except ImportError:
-        pass
-    try:
-        import PyPDF2
-        parts = []
-        with open(filepath, "rb") as f:
-            reader = PyPDF2.PdfReader(f)
-            for page in reader.pages:
-                parts.append(page.extract_text() or "")
-        return "\n".join(parts)
-    except ImportError:
-        print(f"[WARNING] No PDF library. Install pdfplumber or PyPDF2.")
-        return ""
     except Exception as e:
         print(f"[WARNING] Could not read {filepath}: {e}")
         return ""
