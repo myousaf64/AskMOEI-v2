@@ -1,0 +1,15 @@
+[project]
+name = "ask-moei"
+version = "2.0.0"
+description = "Bilingual RAG assistant for UAE MOEI maritime services"
+requires-python = ">=3.10"
+dependencies = [
+    "streamlit>=1.35.0",
+    "openai>=1.30.0",
+    "python-dotenv>=1.0.0",
+    "pdfplumber>=0.10.0",
+    "pandas>=2.0.0",
+]
+
+[tool.uv]
+package = false
