@@ -113,7 +113,7 @@ def load_history(session_id: str, limit: int = 8) -> list[dict]:
             """
             SELECT role, content FROM messages
             WHERE session_id = ?
-            ORDER BY created_at DESC LIMIT ?
+            ORDER BY id DESC LIMIT ?
             """,
             (session_id, limit),
         ).fetchall()
