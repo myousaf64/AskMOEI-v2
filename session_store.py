@@ -19,7 +19,13 @@ def _conn():
     return c
 
 
+_READY = False
+
+
 def _init():
+    global _READY
+    if _READY:
+        return
     with _conn() as c:
         c.executescript("""
             CREATE TABLE IF NOT EXISTS sessions (
@@ -47,6 +53,7 @@ def _init():
                 created_at   TEXT
             );
         """)
+    _READY = True
 
 
 def upsert_session(session_id: str, user_profile: str = "Citizen"):
