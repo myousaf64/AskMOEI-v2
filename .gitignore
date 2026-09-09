@@ -1,0 +1,27 @@
+# Secrets
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Local data - conversation history and analytics
+data/
+*.db
+*.sqlite3
+
+# Knowledge base - see README
+knowledge_base/
+
+# Project notes
+texh-specs.md
+Assessment_Guideline.pdf
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+.venv
+
+# OS
+.DS_Store
