@@ -1,5 +1,7 @@
 # Ask MOEI v2.0
 
+[![CI](https://github.com/myousaf64/AskMOEI-v2/actions/workflows/ci.yml/badge.svg)](https://github.com/myousaf64/AskMOEI-v2/actions/workflows/ci.yml)
+
 ## What it is
 
 A bilingual (English / Arabic) RAG assistant for UAE Ministry of Energy & Infrastructure
